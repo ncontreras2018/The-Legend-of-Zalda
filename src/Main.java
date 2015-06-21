@@ -16,13 +16,11 @@ public class Main extends PApplet {
 		Entity.parent = this;
 
 		world = new World(this);
-		player = new Player(world, this);
+		player = new Player(this);
 
 		world.setPlayer(player);
 		
-		generateEnemys(27);
-		
-		generateEnemys(7);
+		generateEnemys(999);
 		
 
 	}

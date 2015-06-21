@@ -1,3 +1,5 @@
+import processing.core.PApplet;
+
 
 
 public abstract class Entity {
@@ -5,6 +7,8 @@ public abstract class Entity {
 	Location location;
 	
 	float speed;
+	
+	boolean up, down, left, right;
 	
 	static Main parent;
 	

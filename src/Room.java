@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import processing.core.PApplet;
+
 public class Room {
 
 	int row, col;
@@ -30,7 +32,8 @@ public class Room {
 
 	public Tile getTileAt(int x, int y) {
 
-		if (x < 0 || x >= Room.SIZE*Tile.SIZE || y < 0 || y >= Room.SIZE*Tile.SIZE) {
+		if (x < 0 || x >= Room.SIZE * Tile.SIZE || y < 0
+				|| y >= Room.SIZE * Tile.SIZE) {
 			return new Tile(-1, -1, null, parent);
 		}
 
@@ -43,8 +46,28 @@ public class Room {
 				t.update();
 			}
 		}
-		for (Entity e : entities) {
-			e.update();
+		ArrayList<Entity> newList = (ArrayList<Entity>) entities.clone();
+
+		while (newList.size() > 0) {
+
+			Entity closest = newList.get(0);
+			float closestDist = PApplet.dist(closest.location.xPos,
+					closest.location.yPos, parent.player.location.xPos,
+					parent.player.location.yPos);
+
+			for (int i = 0; i < newList.size(); i++) {
+				Entity e = newList.get(i);
+				if (PApplet.dist(e.location.xPos, e.location.yPos,
+						parent.player.location.xPos,
+						parent.player.location.yPos) < closestDist) {
+					closest = e;
+					closestDist = PApplet.dist(e.location.xPos,
+							e.location.yPos, parent.player.location.xPos,
+							parent.player.location.yPos);
+				}
+				closest.update();
+				newList.remove(closest);
+			}
 		}
 	}
 
